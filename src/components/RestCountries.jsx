@@ -5,11 +5,8 @@ import '../App.css'
 
 
 function RestCountries({ theme, renderingCountries }) {
-    const handleSwitch = UseRestCountries();
-    console.log(renderingCountries);
     return (
         <>
-
             {!renderingCountries ? <h1 className='text-gray-900 font-bold uppercase tracking-wide flex items-center justify-center text-center h-screen text-4xl dark:text-white' >Loading...</h1> :(renderingCountries.length == 0 ? <section className=''>
                 No such countries found
             </section> : <section className=' dark:bg-gray-900 dark:text-white  w-[80rem] max-w-[90vw] flex flex-col content-center  justify-center self-center'>
@@ -19,7 +16,7 @@ function RestCountries({ theme, renderingCountries }) {
                     renderingCountries.map(country => {
                         return (
                             <Link to={`/country/${country.name.common}`}>
-                                <div className={`rounded-lg h-full overflow-hidden shadow ${theme == "dark" ? 'bg-gray-800 hover:bg-gray-700 ' : 'bg-white hover:bg-gray-200'}`}>
+                                <div key = {country.name.common} className={`rounded-lg h-full overflow-hidden shadow ${theme == "dark" ? 'bg-gray-800 hover:bg-gray-700 ' : 'bg-white hover:bg-gray-200'}`}>
                                     <img className='h-48 w-full ' src={country.flags.png} alt="Flag" />
 
                                     <div className='p-4'>
