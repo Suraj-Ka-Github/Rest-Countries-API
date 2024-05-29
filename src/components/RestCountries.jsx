@@ -10,7 +10,9 @@ function RestCountries({ theme, renderingCountries }) {
     return (
         <>
 
-            {!renderingCountries ? <h1 className='text-gray-900 font-bold uppercase tracking-wide flex items-center justify-center text-center h-screen text-4xl dark:text-white' >Loading...</h1> : <section className=' dark:bg-gray-900 dark:text-white  w-[80rem] max-w-[90vw] flex flex-col content-center  justify-center self-center'>
+            {!renderingCountries ? <h1 className='text-gray-900 font-bold uppercase tracking-wide flex items-center justify-center text-center h-screen text-4xl dark:text-white' >Loading...</h1> :(renderingCountries.length == 0 ? <section className=''>
+                No such countries found
+            </section> : <section className=' dark:bg-gray-900 dark:text-white  w-[80rem] max-w-[90vw] flex flex-col content-center  justify-center self-center'>
 
 
                 <div className=' max-w-7xl grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10' >{
@@ -34,7 +36,7 @@ function RestCountries({ theme, renderingCountries }) {
                         )
                     })}
                 </div>
-            </section>}
+            </section>)}
         </>
     )
 }
