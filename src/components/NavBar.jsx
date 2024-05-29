@@ -34,7 +34,15 @@ function NavBar({ allCountries, setRenderingCountries, renderingCountries, theme
       }, [])
       setSubRegions(tempSubRegion); 
     }
-    setRenderingCountries(countries);
+    //sort
+    if(sortQuery != '')
+      {
+        sortCountry(sortQuery,countries)
+      }
+      else
+      {
+        setRenderingCountries(countries);
+      }
     
   }
 
@@ -47,40 +55,37 @@ function NavBar({ allCountries, setRenderingCountries, renderingCountries, theme
   }
 
 
-  function sortCountry(query) {
+  function sortCountry(query,countries) {
 
-    setSortQuery(query)
-    let countries = []
+    setSortQuery(query);
     if (query === '') {
       return;
     }
     else if (query === "Area-Ascending") {
-      countries = renderingCountries.sort((a, b) => {
+      countries = countries.sort((a, b) => {
         return (a.area - b.area)
       })
     }
     else if (query === "Area-Descending") {
-      countries = renderingCountries.sort((a, b) => {
+      countries = countries.sort((a, b) => {
         return (b.area - a.area)
       })
     }
     else if (query === "Population-Ascending") {
-      countries = renderingCountries.sort((a, b) => {
+      countries = countries.sort((a, b) => {
         return (a.population - b.population)
       })
 
     }
 
     else if (query === "Population-Descending") {
-      countries = renderingCountries.sort((a, b) => {
+      countries = countries.sort((a, b) => {
         return (b.population - a.population)
       })
 
     }
-    console.log(countries);
-    setRenderingCountries([...countries]);
-
-
+    setRenderingCountries([...countries]); 
+    return ; 
   }
   function onSearch(e) {
     setSearchQuery(e.target.value.toLowerCase());
@@ -95,6 +100,12 @@ function NavBar({ allCountries, setRenderingCountries, renderingCountries, theme
     }
     setRenderingCountries(searchedCountry);
   }
+
+  // if(sortQuery != '')
+  //   {
+  //     sortCountry(query);
+  //   }
+
   const searchIcon = <svg className='h-4 w-4' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" /></svg>
 
   return (
@@ -104,7 +115,7 @@ function NavBar({ allCountries, setRenderingCountries, renderingCountries, theme
         <input onChange={(e) => { onSearch(e) }} className='px-2 w-full border-none outline-none' type="text" name="searchCountry" id="searchCountry" placeholder='search for a country' />
       </div>
       <div className="shadow-md px-2 py-3">
-        <select onChange={(e) => { sortCountry(e.target.value) }}>
+        <select onChange={(e) => { sortCountry(e.target.value,renderingCountries) }}>
           <option value=''>Sort</option>
           <option value="Area-Ascending">Sort By Area(ascending)</option>
           <option value="Area-Descending">Sort By Area(descending)</option>

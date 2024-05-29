@@ -17,7 +17,7 @@ function RestCountries({ theme, renderingCountries }) {
                     renderingCountries.map(country => {
                         return (
                             <Link to={`/country/${country.name.common}`}>
-                                <div className={`rounded-lg overflow-hidden shadow ${theme == "dark" ? 'bg-gray-800 hover:bg-gray-700 ' : 'bg-white hover:bg-gray-200'}`}>
+                                <div className={`rounded-lg h-full overflow-hidden shadow ${theme == "dark" ? 'bg-gray-800 hover:bg-gray-700 ' : 'bg-white hover:bg-gray-200'}`}>
                                     <img className='h-48 w-full ' src={country.flags.png} alt="Flag" />
 
                                     <div className='p-4'>
