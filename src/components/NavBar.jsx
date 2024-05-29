@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import '../App.css'
 
-function NavBar({ allCountries, setRenderingCountries, renderingCountries,theme }) {
+function NavBar({ allCountries, setRenderingCountries, renderingCountries, theme }) {
   const [regionQuery, setRegionQuery] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [subRegions, setSubRegions] = useState([]);
+  const [subRegionsQuery, setSubRegionsQuery] = useState([]);
+
   function handleRegionChange(e) {
     setRegionQuery(e.target.value.toLowerCase())
     let countries = [];
@@ -23,14 +25,14 @@ function NavBar({ allCountries, setRenderingCountries, renderingCountries,theme 
       return acc;
     }, [])
     if (e.target.value == '') {
-      setSubRegions([])
+      setSubRegions('')
     }
     else setSubRegions(tempSubRegion)
     setRenderingCountries(countries);
   }
 
-  function handleSubRegionChange(e)
-  {
+  function handleSubRegionChange(e) {
+    setSubRegionsQuery(e.target.value.toLowerCase())
     console.log(renderingCountries);
     console.log(e.target.value.toLowerCase);
     let countries = allCountries.filter((country) => (country.name.common.toLowerCase().includes(searchQuery)) && country.region.toLowerCase().includes(regionQuery) && country.subregion.toLowerCase().includes(e.target.value.toLowerCase()))
@@ -40,64 +42,66 @@ function NavBar({ allCountries, setRenderingCountries, renderingCountries,theme 
 
   function sortCountry(e) {
     let countries = []
-    if(e.target.value === '')
-      {
-        return;
-      }
-    else if(e.target.value === "Area-Ascending")
-      {
-        countries = renderingCountries.sort((a,b) => {
-          return (a.area - b.area)})
-      }
-      else if(e.target.value === "Area-Descending")
-        {
-          countries = renderingCountries.sort((a,b) => {
-            return (b.area - a.area)})
-        }
-      else if(e.target.value === "Population-Ascending")
-        {
-          countries = renderingCountries.sort((a,b) => {
-            return (a.population - b.population)})
+    if (e.target.value === '') {
+      return;
+    }
+    else if (e.target.value === "Area-Ascending") {
+      countries = renderingCountries.sort((a, b) => {
+        return (a.area - b.area)
+      })
+    }
+    else if (e.target.value === "Area-Descending") {
+      countries = renderingCountries.sort((a, b) => {
+        return (b.area - a.area)
+      })
+    }
+    else if (e.target.value === "Population-Ascending") {
+      countries = renderingCountries.sort((a, b) => {
+        return (a.population - b.population)
+      })
 
-        }
-        
-          else if(e.target.value === "Population-Descending")
-            {
-              countries = renderingCountries.sort((a,b) => {
-                return (b.population - a.population)})
-    
-            }
-      console.log(countries);
-      setRenderingCountries([...countries]);
-    
-    
+    }
+
+    else if (e.target.value === "Population-Descending") {
+      countries = renderingCountries.sort((a, b) => {
+        return (b.population - a.population)
+      })
+
+    }
+    console.log(countries);
+    setRenderingCountries([...countries]);
+
+
   }
   function sortByPopulation(e) {
     let countries = []
-    if(e.target.value === '')
-      {
-        return;
-      }
-    else if(e.target.value === "Ascending")
-      {
-        countries = renderingCountries.sort((a,b) => {
-          return (a.population - b.population)})
-      }
-      else if(e.target.value === "Descending")
-        {
-       countries = renderingCountries.sort((a,b) => b.population - a.population)
+    if (e.target.value === '') {
+      return;
+    }
+    else if (e.target.value === "Ascending") {
+      countries = renderingCountries.sort((a, b) => {
+        return (a.population - b.population)
+      })
+    }
+    else if (e.target.value === "Descending") {
+      countries = renderingCountries.sort((a, b) => b.population - a.population)
 
-        }
-      console.log(countries);
-      setRenderingCountries([...countries]);
-    
-    
+    }
+    console.log(countries);
+    setRenderingCountries([...countries]);
+
+
   }
   function onSearch(e) {
     setSearchQuery(e.target.value.toLowerCase());
-    let searchedCountry = allCountries.filter((country) => (country.name.common.toLowerCase().includes(e.target.value.toLowerCase())) && country.region.toLowerCase().includes(regionQuery));
-    if (regionQuery == '') {
-      searchedCountry = allCountries.filter((country) => (country.name.common.toLowerCase().includes(e.target.value.toLowerCase())));
+    let searchedCountry = allCountries.filter((country) => (country.name.common.toLowerCase().includes(e.target.value.toLowerCase())));
+    if (regionQuery != '') {
+      if (subRegionsQuery != '') {
+        searchedCountry = allCountries.filter((country) => (country.name.common.toLowerCase().includes(e.target.value.toLowerCase())) && country.region.toLowerCase().includes(regionQuery) && country.subregion.toLowerCase().includes(subRegionsQuery));
+      }
+      else {
+        searchedCountry = allCountries.filter((country) => (country.name.common.toLowerCase().includes(e.target.value.toLowerCase())) && country.region.toLowerCase().includes(regionQuery));
+      }
     }
     setRenderingCountries(searchedCountry);
   }
@@ -105,12 +109,12 @@ function NavBar({ allCountries, setRenderingCountries, renderingCountries,theme 
 
   return (
     <nav className='flex justify-between items-center my-6 w-[80rem] max-w-[90vw] '>
-      <div className='flex w-4/12 items-center px-2 shadow-md py-2'>
+      <div className='flex w-4/12 items-center px-2 shadow-md py-3'>
         <i>{searchIcon}</i>
-        <input onChange={(e) => { onSearch(e) }} className='p-2  w-full border-none outline-none' type="text" name="searchCountry" id="searchCountry" placeholder='search for a country' />
+        <input onChange={(e) => { onSearch(e) }} className='px-2 w-full border-none outline-none' type="text" name="searchCountry" id="searchCountry" placeholder='search for a country' />
       </div>
-      <div className = "shadow-md px-2 py-3">
-        <select onChange={(e) => {sortCountry(e)}}>
+      <div className="shadow-md px-2 py-3">
+        <select onChange={(e) => { sortCountry(e) }}>
           <option value=''>Sort</option>
           <option value="Area-Ascending">Sort By Area(ascending)</option>
           <option value="Area-Descending">Sort By Area(descending)</option>
@@ -121,14 +125,14 @@ function NavBar({ allCountries, setRenderingCountries, renderingCountries,theme 
         </select>
 
       </div>
-      <div className = "shadow-md px-2 py-3">
-        <select id= "subRegion" onChange={(e) => {handleSubRegionChange(e)}} >
+      <div className="shadow-md px-2 py-3">
+        <select id="subRegion" onChange={(e) => { handleSubRegionChange(e) }} >
           <option value=''>Filter by Sub-Region</option>
           {subRegions.map((country) => <option value={country}>{country}</option>)}
         </select>
       </div>
-      <div className = "shadow-md px-2 py-3">
-        <select className='py-2' id="region" onChange={(e) => { handleRegionChange(e) }}>
+      <div className="shadow-md px-2 py-3">
+        <select className='' id="region" onChange={(e) => { handleRegionChange(e) }}>
           <option value=''>Filter by Region</option>
           <option value="Africa">Africa</option>
           <option value="Americas">Americas</option>
