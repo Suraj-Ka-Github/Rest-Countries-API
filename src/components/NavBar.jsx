@@ -6,9 +6,7 @@ function NavBar({ allCountries, setRenderingCountries, renderingCountries, theme
   const [searchQuery, setSearchQuery] = useState('');
   const [subRegions, setSubRegions] = useState([]);
   const [subRegionsQuery, setSubRegionsQuery] = useState([]);
-
-  const[areaQuery,setAreaState] = useState('');
-  const[populationQuery,setPopulationState] = useState('');
+  const[sortQuery,setSortQuery] = useState('');
 
 
   function handleRegionChange(e) {
@@ -22,17 +20,22 @@ function NavBar({ allCountries, setRenderingCountries, renderingCountries, theme
     }
 
 
-    let tempSubRegion = countries.reduce((acc, country) => {
-      if (!acc.includes(country.subregion)) {
-        acc.push(country.subregion)
-      }
-      return acc;
-    }, [])
     if (e.target.value == '') {
-      setSubRegions('')
+      setRenderingCountries(allCountries)
+      setSubRegions([])
     }
-    else setSubRegions(tempSubRegion)
+    else
+    {
+      let tempSubRegion = countries.reduce((acc, country) => {
+        if (!acc.includes(country.subregion)) {
+          acc.push(country.subregion)
+        }
+        return acc;
+      }, [])
+      setSubRegions(tempSubRegion); 
+    }
     setRenderingCountries(countries);
+    
   }
 
   function handleSubRegionChange(e) {
@@ -44,51 +47,34 @@ function NavBar({ allCountries, setRenderingCountries, renderingCountries, theme
   }
 
 
-  function sortCountry(e) {
+  function sortCountry(query) {
+
+    setSortQuery(query)
     let countries = []
-    if (e.target.value === '') {
+    if (query === '') {
       return;
     }
-    else if (e.target.value === "Area-Ascending") {
+    else if (query === "Area-Ascending") {
       countries = renderingCountries.sort((a, b) => {
         return (a.area - b.area)
       })
     }
-    else if (e.target.value === "Area-Descending") {
+    else if (query === "Area-Descending") {
       countries = renderingCountries.sort((a, b) => {
         return (b.area - a.area)
       })
     }
-    else if (e.target.value === "Population-Ascending") {
+    else if (query === "Population-Ascending") {
       countries = renderingCountries.sort((a, b) => {
         return (a.population - b.population)
       })
 
     }
 
-    else if (e.target.value === "Population-Descending") {
+    else if (query === "Population-Descending") {
       countries = renderingCountries.sort((a, b) => {
         return (b.population - a.population)
       })
-
-    }
-    console.log(countries);
-    setRenderingCountries([...countries]);
-
-
-  }
-  function sortByPopulation(e) {
-    let countries = []
-    if (e.target.value === '') {
-      return;
-    }
-    else if (e.target.value === "Ascending") {
-      countries = renderingCountries.sort((a, b) => {
-        return (a.population - b.population)
-      })
-    }
-    else if (e.target.value === "Descending") {
-      countries = renderingCountries.sort((a, b) => b.population - a.population)
 
     }
     console.log(countries);
@@ -118,7 +104,7 @@ function NavBar({ allCountries, setRenderingCountries, renderingCountries, theme
         <input onChange={(e) => { onSearch(e) }} className='px-2 w-full border-none outline-none' type="text" name="searchCountry" id="searchCountry" placeholder='search for a country' />
       </div>
       <div className="shadow-md px-2 py-3">
-        <select onChange={(e) => { sortCountry(e) }}>
+        <select onChange={(e) => { sortCountry(e.target.value) }}>
           <option value=''>Sort</option>
           <option value="Area-Ascending">Sort By Area(ascending)</option>
           <option value="Area-Descending">Sort By Area(descending)</option>
@@ -132,7 +118,7 @@ function NavBar({ allCountries, setRenderingCountries, renderingCountries, theme
       <div className="shadow-md px-2 py-3">
         <select id="subRegion" onChange={(e) => { handleSubRegionChange(e) }} >
           <option value=''>Filter by Sub-Region</option>
-          {subRegions.map((country) => <option value={country}>{country}</option>)}
+          {subRegions?subRegions.map((country) => <option value={country}>{country}</option>):null}
         </select>
       </div>
       <div className="shadow-md px-2 py-3">
