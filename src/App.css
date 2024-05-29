@@ -1,0 +1,29 @@
+.bg-light{
+    background-color: #f3f4f6;
+    color: black;
+    nav div{
+        background-color: #ffffff;
+        
+    }   
+}
+.bg-dark{
+    background-color: #2d3949;
+    color: white;
+    nav div{
+            background-color: #1f2937;
+            
+        }   
+}
+select{
+    background-color: inherit;
+    border: none;
+    outline: none;
+    padding: 200px;
+}
+option{
+    background-color: inherit;
+}
+input{
+    background-color: inherit;
+    color: black;
+}
