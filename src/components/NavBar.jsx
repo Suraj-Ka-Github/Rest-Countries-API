@@ -7,6 +7,10 @@ function NavBar({ allCountries, setRenderingCountries, renderingCountries, theme
   const [subRegions, setSubRegions] = useState([]);
   const [subRegionsQuery, setSubRegionsQuery] = useState([]);
 
+  const[areaQuery,setAreaState] = useState('');
+  const[populationQuery,setPopulationState] = useState('');
+
+
   function handleRegionChange(e) {
     setRegionQuery(e.target.value.toLowerCase())
     let countries = [];
