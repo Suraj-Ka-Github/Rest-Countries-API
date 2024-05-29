@@ -51,7 +51,14 @@ function NavBar({ allCountries, setRenderingCountries, renderingCountries, theme
     console.log(renderingCountries);
     console.log(e.target.value.toLowerCase);
     let countries = allCountries.filter((country) => (country.name.common.toLowerCase().includes(searchQuery)) && country.region.toLowerCase().includes(regionQuery) && country.subregion.toLowerCase().includes(e.target.value.toLowerCase()))
-    setRenderingCountries(countries);
+    if(sortQuery != '')
+      {
+        sortCountry(sortQuery,countries)
+      }
+      else
+      {
+        setRenderingCountries(countries);
+      }
   }
 
 
