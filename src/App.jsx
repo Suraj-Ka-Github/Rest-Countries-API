@@ -20,8 +20,8 @@ function App() {
         <Header/>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<HomePage theme = {theme} />}> </Route>
-            <Route path="/country/:name" element={<CountryDetail theme = {theme}/>}></Route>
+            <Route path="/" element={<HomePage/>}> </Route>
+            <Route path="/country/:name" element={<CountryDetail/>}></Route>
           </Routes>
         </BrowserRouter>
         

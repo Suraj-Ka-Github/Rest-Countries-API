@@ -28,14 +28,14 @@ const Header = () => {
     return (
         <div className={`flex shadow mb-2 min-w-full justify-center   items-center ${theme == "dark" ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
             <div className='header flex justify-between py-6 w-[80rem] max-w-[90vw]'>
-            <h1 className='font-bold text-2xl'>Where in the world?</h1>
-            <div className='flex justify-center items-center gap-2' >
-                {
-                    theme === "dark" ? sunIcon : moonIcon
-                }
-                <button onClick={handleOnClick} className="bg-transparent">{theme === themes.dark ? "Light Mode" : "Dark Mode"}</button>
+                <h1 className='font-bold text-2xl'>Where in the world?</h1>
+                <div className='flex justify-center items-center gap-2' >
+                    {
+                        theme === "dark" ? sunIcon : moonIcon
+                    }
+                    <button onClick={handleOnClick} className="bg-transparent">{theme === themes.dark ? "Light Mode" : "Dark Mode"}</button>
+                </div>
             </div>
-        </div>
         </div>
     )
 }

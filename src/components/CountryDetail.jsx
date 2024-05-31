@@ -1,24 +1,30 @@
-import { useState, useEffect, } from "react";
-import { useParams,useNavigate } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { ThemeContext, themes } from '../context/themeContext';
 
 import countryData from "../assets/countries.json"
 
-function CountryDetail({ theme }) {
+function CountryDetail() {
     const [country, setCountry] = useState(null)
-    const [border, setBorder] = useState(null)
 
 
     const { name } = useParams();
     const navigate = useNavigate();
-    
+    const { theme } = useContext(ThemeContext);
+
 
     useEffect(() => {
         const requiredCountry = countryData.filter((country) => country.name.common == name)
         setCountry(requiredCountry[0]);
     }, [])
 
-    let leftArrow = <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
-    
+    let leftArrow = <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" /></svg>
+    const borderCountries = country?.borders?.map((borderCode) => {
+        let countryName = countryData.find((country) => {
+            return country.cca3 === borderCode;
+        });
+        return countryName.name.common;
+    });
 
     return (
         <section className="flex mt-20 items-center justify-center">
@@ -26,7 +32,7 @@ function CountryDetail({ theme }) {
             {!country ? <h1 className='text-gray-900 font-bold uppercase tracking-wide flex text-center h-screen text-4xl dark:text-white' >Loading...</h1> :
                 <section className="w-[80rem] max-w-[90vw]">
 
-                    <div onClick={() => navigate(-1)}  className= {`flex items-center mb-6 px-4 py-2 gap-2 bg-gray-200 max-w-24 justify-center shadow-md : hover:cursor-pointer ${theme == "dark" ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
+                    <div onClick={() => navigate(-1)} className={`flex items-center mb-6 px-4 py-2 gap-2 bg-gray-200 max-w-24 justify-center shadow-md : hover:cursor-pointer ${theme == "dark" ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
                         {leftArrow}
                         <button >Back</button>
                     </div>
@@ -56,14 +62,14 @@ function CountryDetail({ theme }) {
                                 </div>
 
                             </div>
-                            
+
 
                             {country.borders && <div className=" flex gap-10  items-center">
                                 <h3 className="font-bold" >Border Countries: </h3>
-                            
+
                                 <ul className=" flex flex-wrap items-start justify-start gap-2" >
                                     {
-                                        country.borders.map((border, index) => <li className={`border px-4 py-1 shadow ${theme == "dark" ? 'bg-gray-800 text-white' : 'bg-white text-black'}`} key={index}> {border}</li>)
+                                        borderCountries?.map((border, index) => <li className={`border px-4 py-1 shadow ${theme == "dark" ? 'bg-gray-800 text-white' : 'bg-white text-black'}`} key={index}> {border}</li>)
                                     }
                                 </ul>
 
