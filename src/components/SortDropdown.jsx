@@ -1,25 +1,22 @@
 import React from 'react'
 import '../App.css'
+import DropDown from './DropDown';
 
 function SortDropdown({ setSortQuery }) {
-  function sortCountry(query) {
 
-    setSortQuery(query);
+  const sortOptions = ["Area-Ascending","Area-Descending",
+  "Population-Ascending",
+  "Population-Descending"]
+
+  function sortCountry(e) {
+
+    setSortQuery(e.target.value);
   }
   return (
-    <div className="sortingDropdown shadow-md px-2 py-3">
-      <select onChange={(e) => { sortCountry(e.target.value) }}>
-        <option value=''>Sort</option>
-        <option value="Area-Ascending">Sort By Area(ascending)</option>
-        <option value="Area-Descending">Sort By Area(descending)</option>
-        <option value="Population-Ascending">Sort By Population(ascending)</option>
-        <option value="Population-Descending">Sort By Population(descending)</option>
+    <DropDown defaultOption = {'Sort'} optionArray = {sortOptions} handleQueryOnChange = {sortCountry}  /> 
 
-
-      </select>
-
-    </div>
   )
 }
 
 export default SortDropdown
+

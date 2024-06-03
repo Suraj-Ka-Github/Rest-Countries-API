@@ -14,14 +14,14 @@ function RestCountries({ renderingCountries }) {
         <>
             {!renderingCountries ? <h1 className='text-gray-900 font-bold uppercase tracking-wide flex items-center justify-center text-center h-screen text-4xl dark:text-white' >Loading...</h1> : (renderingCountries.length == 0 ? <section className=''>
                 No such countries found
-            </section> : <section className='bg-inherit dark:text-white bg-white text-black w-[80rem] max-w-[90vw] flex flex-col content-center  justify-center self-center'>
+            </section> : <section className='bg-inherit dark:text-white w-[80rem] max-w-[90vw] flex flex-col content-center  justify-center self-center'>
 
 
                 <div className=' max-w-7xl grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10' >{
                     renderingCountries.map(country => {
                         return (
                             <Link to={`/country/${country.name.common}`}>
-                                <div key={country.name.common} className={`countryCard rounded-lg h-full overflow-hidden shadow shadow-lg`}>
+                                <div key={country.name.common} className={`countryCard rounded-lg h-full overflow-hidden shadow-lg`}>
                                     <img className='h-48 w-full ' src={country.flags.png} alt="Flag" />
 
                                     <div className='p-4'>

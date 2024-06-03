@@ -62,9 +62,9 @@ function HomePage() {
         <Region
           setRegionQuery={setRegionQuery}
           setSubRegionsQuery={setSubRegionsQuery}
+          allCountries = {allCountries}
         />
       </div>
-      {/* <NavBar allCountries={allCountries} setRenderingCountries={setRenderingCountries} renderingCountries={renderingCountries} theme={theme} /> */}
 
       <RestCountries renderingCountries={renderingCountries} />
     </div>

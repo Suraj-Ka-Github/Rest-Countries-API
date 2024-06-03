@@ -2,10 +2,9 @@
     background-color: #f3f4f6;
     color: black;
 
-    .subregionDropdown,
-    .regionDropdown,
+    
+    .dropdown,
     .searchBox,
-    .sortingDropdown,
     .countryCard{
         background-color: #ffffff;
         color: black;
@@ -14,10 +13,9 @@
 .bg-dark{
     background-color: #2d3949;
     color: white;
-    .subregionDropdown,
-    .regionDropdown,
+    
+    .dropdown,
     .searchBox,
-    .sortingDropdown,
     .countryCard{
             background-color: #1f2937;            
         }   

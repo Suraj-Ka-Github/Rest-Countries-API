@@ -1,8 +1,12 @@
 import React from 'react'
-
-function DropDown() {
+import '../App.css'
+function DropDown({defaultOption,optionArray,handleQueryOnChange}) {
+    console.log(optionArray);
   return (
-    <div>DropDown</div>
+    <select className='dropdown shadow-md px-2 py-3' onChange={(e) => { handleQueryOnChange(e) }} >
+                <option value='' key=''>{defaultOption}</option>
+                {optionArray ? optionArray?.map((option) => <option value={option} key={option}>{option}</option>) : []}
+            </select>
   )
 }
 
